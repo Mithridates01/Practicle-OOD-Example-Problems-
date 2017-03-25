@@ -1,22 +1,22 @@
 class Gear
 	attr_reader :chainring, :cog, :wheel
 
-	def initialize(chainring, cog, wheel=nil)
-		@chainring = chainring
-		@cog = cog
-		@wheel = wheel
+	def initialize(args)
+		@chainring = args[:chainring]
+		@cog = args[:cog]
+		@wheel = args[:wheel]
 	end
 
 	def ratio
 		chainring / cog.to_f
 	end
 
-	def gear_inches
-		ratio * diameter
-	end
-
 	def diameter
 		wheel.diameter
+	end
+
+	def gear_inches
+		ratio * diameter
 	end
 
 end
@@ -39,12 +39,9 @@ class Wheel
 
 end
 
+gear = Gear.new(:chainring => 52,
+								:cog 			 => 11,
+								:wheel 		 => Wheel.new(26, 1.5))
 
-wheel = Wheel.new(26, 1.5)
-puts wheel.circumference
-puts wheel.diameter
-
-
-gear = Gear.new(52, 11, wheel)
 puts gear.gear_inches
 puts gear.ratio
